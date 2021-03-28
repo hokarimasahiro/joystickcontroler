@@ -1,9 +1,13 @@
 radio.onReceivedString(function (receivedString) {
-    受信文字列 = receivedString
+    受信文字 = receivedString.split(",")
+    if (受信文字[0] == "CQ") {
+        radio.sendString("" + 受信文字[1] + "," + control.deviceName() + "," + convertToText(無線グループ))
+    }
 })
 let Y = 0
 let X = 0
-let 受信文字列 = ""
+let 受信文字: string[] = []
+let 無線グループ = 0
 let TYPE = 0
 pins.setPull(DigitalPin.P5, PinPullMode.PullUp)
 pins.setPull(DigitalPin.P11, PinPullMode.PullUp)
@@ -18,27 +22,14 @@ if (pins.digitalReadPin(DigitalPin.P16) == 0) {
 } else {
     TYPE = 1
 }
-let 無線グループ = 0
-let 無線グループ設定中 = true
-getradiogroup.initRadioGroup()
-basic.showIcon(IconNames.SmallHeart)
-while (無線グループ == 0) {
-    無線グループ = getradiogroup.getRadioGroup(受信文字列)
-    if (無線グループ == 0) {
-        basic.showIcon(IconNames.Sad)
-    } else {
-        watchfont.showNumber2(無線グループ)
-    }
-}
+無線グループ = Math.abs(control.deviceSerialNumber()) % 98 + 1
+watchfont.showNumber2(無線グループ)
 radio.setTransmitPower(7)
-受信文字列 = ""
-無線グループ設定中 = false
 basic.forever(function () {
-    if (!(無線グループ設定中)) {
-        X = pins.analogReadPin(AnalogPin.P1) * 1 - 512
-        Y = pins.analogReadPin(AnalogPin.P2) * 1 - 512
-        radio.sendString("$," + convertToText(X) + "," + convertToText(Y))
-    }
+    radio.setGroup(無線グループ)
+    X = pins.analogReadPin(AnalogPin.P1) * 1 - 512
+    Y = pins.analogReadPin(AnalogPin.P2) * 1 - 512
+    radio.sendString("$," + convertToText(X) + "," + convertToText(Y))
     if (TYPE == 0) {
         if (pins.digitalReadPin(DigitalPin.P12) == 0) {
             radio.sendNumber(1)
@@ -72,5 +63,6 @@ basic.forever(function () {
             radio.sendNumber(0)
         }
     }
+    radio.setGroup(0)
     basic.pause(50)
 })
