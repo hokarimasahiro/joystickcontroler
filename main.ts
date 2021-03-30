@@ -1,7 +1,9 @@
 radio.onReceivedString(function (receivedString) {
-    受信文字 = receivedString.split(",")
-    if (受信文字[0] == "CQ") {
-        radio.sendString("" + 受信文字[1] + "," + control.deviceName() + "," + convertToText(無線グループ))
+    if (radio.receivedPacket(RadioPacketProperty.SignalStrength) >= -50) {
+        受信文字 = receivedString.split(",")
+        if (受信文字[0] == "CQ") {
+            radio.sendString("" + 受信文字[1] + "," + control.deviceName() + "," + convertToText(無線グループ))
+        }
     }
 })
 let V = 0
