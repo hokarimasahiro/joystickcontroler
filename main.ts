@@ -31,8 +31,8 @@ basic.forever(function () {
     radio.setGroup(無線グループ)
     X = pins.analogReadPin(AnalogPin.P1) * 1 - 512
     Y = pins.analogReadPin(AnalogPin.P2) * 1 - 512
-    Z = input.rotation(Rotation.Roll) * 5
-    V = input.rotation(Rotation.Pitch) * 5
+    Z = input.rotation(Rotation.Roll) * 1
+    V = input.rotation(Rotation.Pitch) * 1
     radio.sendString("$," + convertToText(X) + "," + convertToText(Y) + "," + convertToText(Z) + "," + convertToText(V))
     if (TYPE == 0) {
         if (pins.digitalReadPin(DigitalPin.P12) == 0) {
