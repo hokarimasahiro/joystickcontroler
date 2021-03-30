@@ -1,5 +1,5 @@
 radio.onReceivedString(function (receivedString) {
-    if (radio.receivedPacket(RadioPacketProperty.SignalStrength) >= -50) {
+    if (radio.receivedPacket(RadioPacketProperty.SignalStrength) >= -70) {
         受信文字 = receivedString.split(",")
         if (受信文字[0] == "CQ") {
             radio.sendString("" + 受信文字[1] + "," + control.deviceName() + "," + convertToText(無線グループ))
