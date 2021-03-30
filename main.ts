@@ -4,6 +4,8 @@ radio.onReceivedString(function (receivedString) {
         radio.sendString("" + 受信文字[1] + "," + control.deviceName() + "," + convertToText(無線グループ))
     }
 })
+let V = 0
+let Z = 0
 let Y = 0
 let X = 0
 let 受信文字: string[] = []
@@ -29,7 +31,9 @@ basic.forever(function () {
     radio.setGroup(無線グループ)
     X = pins.analogReadPin(AnalogPin.P1) * 1 - 512
     Y = pins.analogReadPin(AnalogPin.P2) * 1 - 512
-    radio.sendString("$," + convertToText(X) + "," + convertToText(Y))
+    Z = input.rotation(Rotation.Roll) * 5
+    V = input.rotation(Rotation.Pitch) * 5
+    radio.sendString("$," + convertToText(X) + "," + convertToText(Y) + "," + convertToText(Z) + "," + convertToText(V))
     if (TYPE == 0) {
         if (pins.digitalReadPin(DigitalPin.P12) == 0) {
             radio.sendNumber(1)
