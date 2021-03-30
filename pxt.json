@@ -4,7 +4,7 @@
     "dependencies": {
         "core": "*",
         "radio": "*",
-        "pxt-getradiogroup": "github:hokarimasahiro/pxt-getradiogroup#64cec72dc94a95a1cab65a92ce1abcaa33a50b6f",
+        "pxt-getradiogroup": "github:hokarimasahiro/pxt-getradiogroup#78e41e0b856518157dbcb75b1baf4955bb02abaa",
         "pxt-watchfont": "github:hokarimasahiro/pxt-watchfont#572ae2ddd7f597dc65081544432e18b706bec4c4",
         "microphone": "*"
     },
