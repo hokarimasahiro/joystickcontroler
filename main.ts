@@ -1,4 +1,5 @@
 radio.onReceivedString(function (receivedString) {
+    serial.writeLine("" + radio.receivedPacket(RadioPacketProperty.SignalStrength) + ":" + receivedString)
     if (radio.receivedPacket(RadioPacketProperty.SignalStrength) >= -70) {
         受信文字 = receivedString.split(",")
         if (受信文字[0] == "CQ") {
@@ -29,10 +30,11 @@ if (pins.digitalReadPin(DigitalPin.P16) == 0) {
 無線グループ = Math.abs(control.deviceSerialNumber()) % 98 + 1
 watchfont.showNumber2(無線グループ)
 radio.setTransmitPower(7)
+serial.redirectToUSB()
 basic.forever(function () {
     radio.setGroup(無線グループ)
-    X = pins.analogReadPin(AnalogPin.P1) * 1 - 512
-    Y = pins.analogReadPin(AnalogPin.P2) * 1 - 512
+    X = pins.analogReadPin(AnalogReadWritePin.P1) * 1 - 512
+    Y = pins.analogReadPin(AnalogReadWritePin.P2) * 1 - 512
     Z = input.rotation(Rotation.Roll) * 1
     V = input.rotation(Rotation.Pitch) * 1
     radio.sendString("$," + convertToText(X) + "," + convertToText(Y) + "," + convertToText(Z) + "," + convertToText(V))
